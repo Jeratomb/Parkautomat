@@ -7,7 +7,7 @@ public class Kasse {
         geldspeicher = startMenge;
     }
 
-    public int getBetrag() {
+    public int getBetrag(Geldmenge geldspeicher) {
         return geldspeicher.getAnzahl(0) * 10 + geldspeicher.getAnzahl(1) * 20 +
                 geldspeicher.getAnzahl(2) * 50 + geldspeicher.getAnzahl(3) * 100 +
                 geldspeicher.getAnzahl(4) * 200 + geldspeicher.getAnzahl(5) * 500 +
@@ -15,9 +15,14 @@ public class Kasse {
     }
 
     public Geldmenge bezahle(int betrag, Geldmenge zahlung) {
-        // Implementierung der Zahlungslogik hier
+        int gegebenesGeld = getBetrag(zahlung);
+        int diff = betrag - gegebenesGeld;
+        if(diff > 0){
+            System.out.println("Noch zu zahlender Betrag:" + diff);
+        }else if(diff < 0){
 
-        // Beispiel: Rückgabe von Münzen
+        }
+
         Geldmenge rueckgabe = new Geldmenge(0, 0, 0, 0, 0, 0, 0, 0);
         rueckgabe.setAnzahl(0, 4); // Beispiel: Vier 10c Münzen zurückgeben
         // ...
