@@ -1,39 +1,63 @@
 package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
 public class Kasse {
-    private final Geldmenge geldspeicher;
+    public Geldmenge geld;
+    private final int[] mult = {10, 20, 50, 100, 200, 500, 1000, 2000};
 
     public Kasse(Geldmenge startMenge) {
-        geldspeicher = startMenge;
+        this.geld = startMenge;
+    }
+    public Kasse() {
+        this.geld = new Geldmenge();
     }
 
-    public int getBetrag(Geldmenge geldspeicher) {
-        return geldspeicher.getAnzahl(0) * 10 + geldspeicher.getAnzahl(1) * 20 +
-                geldspeicher.getAnzahl(2) * 50 + geldspeicher.getAnzahl(3) * 100 +
-                geldspeicher.getAnzahl(4) * 200 + geldspeicher.getAnzahl(5) * 500 +
-                geldspeicher.getAnzahl(6) * 1000 + geldspeicher.getAnzahl(7) * 2000;
-    }
+    public Geldmenge bezahle(int betrag, Geldmenge zahlMenge) {
+        if (!zahlMenge.isGood(betrag)) throw new IllegalArgumentException("Not enough money provided");
+        int providedTotal = zahlMenge.getTotal();
+        int changeAmount = providedTotal - betrag;
 
-    public Geldmenge bezahle(int betrag, Geldmenge zahlung) {
-        int gegebenesGeld = getBetrag(zahlung);
-        int diff = betrag - gegebenesGeld;
-        if(diff > 0){
-            System.out.println("Noch zu zahlender Betrag:" + diff);
-        }else if(diff < 0){
-
+        Geldmenge change;
+        try {
+            change = berechneGeld(changeAmount);
+            this.geld.minusGeld(zahlMenge);
+            this.geld.plusGeld(change);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new Geldmenge();
         }
 
-        Geldmenge rueckgabe = new Geldmenge(0, 0, 0, 0, 0, 0, 0, 0);
-        rueckgabe.setAnzahl(0, 4); // Beispiel: Vier 10c Münzen zurückgeben
-        // ...
-
-        // Aktualisierung des Geldspeichers
-        // Beispiel: Reduziere die Anzahl der vorhandenen 10c Münzen um 4
-        geldspeicher.setAnzahl(0, geldspeicher.getAnzahl(0) - 4);
-        // ...
-
-        return rueckgabe;
+        return change;
     }
 
-    // Weitere private/protected Methoden können hier definiert werden
+    private Geldmenge berechneGeld(int betrag) {
+        Geldmenge res = new Geldmenge();
+        int changeNeeded = betrag;
+
+        for (int i = mult.length - 1; i >= 0; i--) {
+            int coinValue = mult[i];
+            int coinsNeeded = changeNeeded / coinValue;
+            int coinsAvailable = geld.getSpeicher()[i];
+
+            if (coinsNeeded > 0 && coinsAvailable > 0) {
+                int coinsToGive = Math.min(coinsNeeded, coinsAvailable);
+                res.getSpeicher()[i] = coinsToGive;
+                changeNeeded -= coinsToGive * coinValue;
+            }
+
+            if (changeNeeded == 0) {
+                break;
+            }
+        }
+
+        if (changeNeeded > 0) {
+            throw new IllegalArgumentException("Nicht genügend Wechselgeld!");
+        }
+
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        return geld.toString();
+    }
 }
