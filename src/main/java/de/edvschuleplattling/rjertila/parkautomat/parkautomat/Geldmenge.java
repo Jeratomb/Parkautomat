@@ -40,16 +40,35 @@ public class Geldmenge {
         }
     }
 
-    public void minusGeld(Geldmenge other){
-        for (int i = 0; i < other.speicher.length; i++) {
-            speicher[i] -= other.speicher[i];
-            if (speicher[i] < 0) {
-                throw new IllegalArgumentException("Cannot have negative coin count!");
+    public void minusGeld(Geldmenge other) throws IllegalArgumentException{
+            for (int i = 0; i < other.speicher.length; i++) {
+                int coinsToSubtract = other.speicher[i];
+
+                // Überprüfe, ob genügend Münzen vorhanden sind
+                if (speicher[i] < coinsToSubtract) {
+                    // Wenn nicht genug Münzen vorhanden sind, versuche den Rest von einem höheren Wert zu subtrahieren
+                    for (int j = i + 1; j < speicher.length; j++) {
+                        int higherCoinValue = mult[j];
+                        int coinsNeeded = (coinsToSubtract - speicher[i] + higherCoinValue - 1) / higherCoinValue;
+
+                        if (speicher[j] >= coinsNeeded) {
+                            // Subtrahiere den Rest von einem höheren Wert
+                            speicher[i] -= coinsToSubtract - (coinsNeeded * higherCoinValue);
+                            speicher[j] -= coinsNeeded;
+                            return;
+                        }
+                    }
+
+                    // Wenn auch das nicht möglich ist, wirf eine Exception
+                    throw new IllegalArgumentException("Cannot have negative coin count!");
+                } else {
+                    // Subtrahiere die Münzen
+                    speicher[i] -= coinsToSubtract;
+                }
             }
         }
-    }
 
-    public int getTotal() {
+    public int getBetrag() {
         int sum = 0;
         for (int i = 0; i < getSpeicher().length; i++) {
             sum += getSpeicher()[i] * mult[i];
@@ -58,13 +77,13 @@ public class Geldmenge {
     }
 
     public boolean isGood() {
-        if (this.getTotal() % 10 != 0) return false;
-        if (this.getTotal() < 0) return false;
+        if (this.getBetrag() % 10 != 0) return false;
+        if (this.getBetrag() < 0) return false;
         return true;
     }
 
     public boolean isGood(int betrag) {
-        if (this.getTotal() < betrag) return false;
+        if (this.getBetrag() < betrag) return false;
         return isGood();
     }
     public void setAnzahl(int muenzart, int anzahl) {

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<fx:root prefHeight="88.0" prefWidth="405.0" type="Pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="45.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10c" />
+      <Text layoutX="213.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5€" />
+      <Text layoutX="182.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2€" />
+      <Text layoutX="149.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1€" />
+      <Text layoutX="112.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50c" />
+      <Text layoutX="248.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10€" />
+      <Text layoutX="281.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="20€" />
+      <Text layoutX="76.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="20c" />
+      <TextField fx:id="txt10C" layoutX="35.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
+      <TextField fx:id="txt20C" layoutX="69.0" layoutY="45.0" prefHeight="25.0" prefWidth="33.0" />
+      <TextField fx:id="txt2E" layoutX="180.0" layoutY="45.0" prefHeight="25.0" prefWidth="33.0" />
+      <TextField fx:id="txt1E" layoutX="142.0" layoutY="45.0" prefHeight="25.0" prefWidth="40.0" />
+      <TextField fx:id="txt50C" layoutX="101.0" layoutY="45.0" prefHeight="25.0" prefWidth="41.0" />
+      <TextField fx:id="txt5E" layoutX="213.0" layoutY="45.0" prefHeight="25.0" prefWidth="33.0" />
+      <TextField fx:id="txt20E" layoutX="281.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
+      <TextField fx:id="txt10E" layoutX="246.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
+      <Label fx:id="lblBetrag" layoutX="336.0" layoutY="49.0" text="" />
+   </children>
+</fx:root>
+
