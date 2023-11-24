@@ -2,6 +2,7 @@ package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
 import java.util.Arrays;
 
+
 public class Geldmenge {
     private final int[] speicher = new int[8];
     private final int[] mult = {10, 20, 50, 100, 200, 500, 1000, 2000};
@@ -21,7 +22,7 @@ public class Geldmenge {
     }
 
     public Geldmenge(int[] money) {
-        System.arraycopy(money, 0, speicher, 0, speicher.length);
+       System.arraycopy(money, 0, speicher, 0, speicher.length);
     }
     public Geldmenge() {
         Arrays.fill(speicher, 0);
@@ -60,7 +61,7 @@ public class Geldmenge {
                     }
 
                     // Wenn auch das nicht möglich ist, wirf eine Exception
-                    throw new IllegalArgumentException("Cannot have negative coin count!");
+                    throw new IllegalArgumentException("Kein negativer Münzwert möglich!");
                 } else {
                     // Subtrahiere die Münzen
                     speicher[i] -= coinsToSubtract;
@@ -95,5 +96,6 @@ public class Geldmenge {
         return "Muenzen: " + Arrays.toString(Arrays.stream(speicher).toArray());
     }
 }
+
 
 

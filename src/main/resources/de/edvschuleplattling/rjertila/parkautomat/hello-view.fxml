@@ -20,48 +20,48 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnRndm" layoutX="271.0" layoutY="147.0" mnemonicParsing="false" text="Zufälliger Betrag" />
-      <Button fx:id="btn10c" layoutX="78.0" layoutY="203.0" mnemonicParsing="false" text="10c">
+      <Button fx:id="btn10c" layoutX="78.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd10C" text="10c">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn10E" layoutX="320.0" layoutY="203.0" mnemonicParsing="false" text="10€">
+      <Button fx:id="btnRndm" layoutX="271.0" layoutY="147.0" mnemonicParsing="false" onAction="#onRnd" text="Zufälliger Betrag" />
+      <Button fx:id="btn10E" layoutX="320.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd10E" text="10€">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn5E" layoutX="283.0" layoutY="203.0" mnemonicParsing="false" text="5€">
+      <Button fx:id="btn5E" layoutX="283.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd5E" text="5€">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn2E" layoutX="246.0" layoutY="203.0" mnemonicParsing="false" text="2€">
+      <Button fx:id="btn2E" layoutX="246.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd2E" text="2€">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn1E" layoutX="209.0" layoutY="203.0" mnemonicParsing="false" text="1€">
+      <Button fx:id="btn1E" layoutX="209.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd1E" text="1€">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn50c" layoutX="165.0" layoutY="203.0" mnemonicParsing="false" text="50c">
+      <Button fx:id="btn50c" layoutX="165.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd50C" text="50c">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn20c" layoutX="121.0" layoutY="203.0" mnemonicParsing="false" text="20c">
+      <Button fx:id="btn20c" layoutX="121.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd20C" text="20c">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnFertig" layoutX="410.0" layoutY="203.0" mnemonicParsing="false" text="Fertig">
+      <Button fx:id="btnFertig" layoutX="410.0" layoutY="203.0" mnemonicParsing="false" onAction="#onFinish" text="Fertig">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btn20E" layoutX="365.0" layoutY="203.0" mnemonicParsing="false" text="20€">
+      <Button fx:id="btn20E" layoutX="365.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd20E" text="20€">
          <font>
             <Font size="15.0" />
          </font>
