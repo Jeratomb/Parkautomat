@@ -1,7 +1,9 @@
 package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
+import de.edvschuleplattling.rjertila.parkautomat.exceptions.KeinPassendesRueckgeldException;
+
 public class TestProg {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws KeinPassendesRueckgeldException {
         // 5x10c 0x20c, 8x50c, 0x1€, 7x2€, keine Scheine
         Geldmenge startMenge = new Geldmenge(5, 0, 8, 0, 7, 0, 0, 0);
         //Erzeugt eine Kasse mit dem obigen Startkapital
@@ -21,7 +23,7 @@ public class TestProg {
 // ==> Die Methode bezahle wirft eine Exception.
 // Der Inhalt des Münzspeichers, bleibt bei dieser fehlgeschlagenen Zahlung
 // unverändert.
-        Geldmenge zahlung2 = new Geldmenge(0, 0, 0, 0, 2);  // Konstruktor nur für Münzen
+        Geldmenge zahlung2 = new Geldmenge(0, 0, 0, 0, 2,0,0,0);  // Konstruktor nur für Münzen
         Geldmenge rueck2 = kasse.bezahle(260, zahlung2); // ==> Exception
 
 // Im Geldspeicher der Kasse sind nun (1,0,8,0,6,1,0,0)

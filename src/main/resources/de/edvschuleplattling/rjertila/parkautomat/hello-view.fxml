@@ -1,96 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.edvschuleplattling.rjertila.parkautomat.Geldspeicher?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import de.edvschuleplattling.rjertila.parkautomat.Geldspeicher?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edvschuleplattling.rjertila.parkautomat.HelloController">
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edvschuleplattling.rjertila.parkautomat.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
     <children>
-      <Text layoutX="78.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Betrag:">
-         <font>
-            <Font size="21.0" />
-         </font>
-      </Text>
-      <Label fx:id="lblBetrag" layoutX="173.0" layoutY="144.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="btn10c" layoutX="78.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd10C" text="10c">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnRndm" layoutX="271.0" layoutY="147.0" mnemonicParsing="false" onAction="#onRnd" text="Zufälliger Betrag" />
-      <Button fx:id="btn10E" layoutX="320.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd10E" text="10€">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn5E" layoutX="283.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd5E" text="5€">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn2E" layoutX="246.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd2E" text="2€">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn1E" layoutX="209.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd1E" text="1€">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn50c" layoutX="165.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd50C" text="50c">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn20c" layoutX="121.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd20C" text="20c">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnFertig" layoutX="410.0" layoutY="203.0" mnemonicParsing="false" onAction="#onFinish" text="Fertig">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn20E" layoutX="365.0" layoutY="203.0" mnemonicParsing="false" onAction="#onAdd20E" text="20€">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Button>
-      <TitledPane animated="false" layoutX="66.0" layoutY="22.0" prefHeight="101.0" prefWidth="471.0" text="Bestand">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Geldspeicher layoutX="14.0" layoutY="-13.0" />
-               </children></AnchorPane>
-        </content>
-      </TitledPane>
-      <TitledPane animated="false" layoutX="72.0" layoutY="264.0" prefHeight="101.0" prefWidth="471.0" text="Gezahlt">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="117.0" prefWidth="469.0">
-               <children>
-                  <Geldspeicher layoutX="14.0" layoutY="-13.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
-      <TitledPane animated="false" layoutX="72.0" layoutY="384.0" prefHeight="101.0" prefWidth="471.0" text="Rückgeld">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Geldspeicher layoutX="25.0" layoutY="-6.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
-   </children>
-</AnchorPane>
+        <Label text="Parkautomat">
+            <font>
+                <Font size="37.0" />
+            </font>
+        </Label>
+        <Geldspeicher fx:id="gmPaneBestand" title="Bestand" />
+        <HBox alignment="CENTER_LEFT" spacing="20.0">
+            <children>
+                <Label text="Betrag:">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblBetrag" prefWidth="70.0">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnRandom" mnemonicParsing="false" onAction="#onClickRandom" text="Zufälliger Betrag" />
+            </children>
+        </HBox>
+        <HBox fx:id="boxButtons" layoutX="30.0" layoutY="217.0" prefWidth="200.0" spacing="6.0">
+            <children>
+                <Button mnemonicParsing="false" prefWidth="50.0" text="10c">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="20c">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="54.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="50c">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="98.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="1€">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="142.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="2€">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="186.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="5€">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="230.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="10€">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button layoutX="274.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="20€">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+        <Geldspeicher fx:id="gmPaneGezahlt" title="Gezahlt" />
+        <Geldspeicher fx:id="gmPaneRueckgeld" title="Rückgeld" />
+    </children>
+</VBox>

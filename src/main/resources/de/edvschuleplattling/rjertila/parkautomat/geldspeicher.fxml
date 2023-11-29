@@ -2,28 +2,52 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<fx:root prefHeight="88.0" prefWidth="405.0" type="Pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Text layoutX="45.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10c" />
-      <Text layoutX="213.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5€" />
-      <Text layoutX="182.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2€" />
-      <Text layoutX="149.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1€" />
-      <Text layoutX="112.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50c" />
-      <Text layoutX="248.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10€" />
-      <Text layoutX="281.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="20€" />
-      <Text layoutX="76.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="20c" />
-      <TextField fx:id="txt10C" layoutX="35.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
-      <TextField fx:id="txt20C" layoutX="69.0" layoutY="45.0" prefHeight="25.0" prefWidth="33.0" />
-      <TextField fx:id="txt2E" layoutX="180.0" layoutY="45.0" prefHeight="25.0" prefWidth="33.0" />
-      <TextField fx:id="txt1E" layoutX="142.0" layoutY="45.0" prefHeight="25.0" prefWidth="40.0" />
-      <TextField fx:id="txt50C" layoutX="101.0" layoutY="45.0" prefHeight="25.0" prefWidth="41.0" />
-      <TextField fx:id="txt5E" layoutX="213.0" layoutY="45.0" prefHeight="25.0" prefWidth="33.0" />
-      <TextField fx:id="txt20E" layoutX="281.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
-      <TextField fx:id="txt10E" layoutX="246.0" layoutY="45.0" prefHeight="25.0" prefWidth="38.0" />
-      <Label fx:id="lblBetrag" layoutX="336.0" layoutY="49.0" text="" />
-   </children>
+<fx:root type="Pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="untitled">
+      <content>
+         <GridPane fx:id="grid" hgap="5.0" vgap="5.0">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" />
+               <ColumnConstraints hgrow="SOMETIMES" />
+               <ColumnConstraints hgrow="SOMETIMES" />
+               <ColumnConstraints hgrow="SOMETIMES" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" />
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints vgrow="SOMETIMES" />
+               <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+               <Label layoutY="100.0" text="10c" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+               <Label layoutX="20.0" layoutY="100.0" text="20c" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+               <Label layoutX="406.0" layoutY="100.0" text="50c" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+               <Label layoutX="218.0" layoutY="105.0" text="1€" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+               <Label layoutX="305.0" layoutY="105.0" text="2€" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+               <Label layoutX="384.0" layoutY="105.0" text="5€" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+               <Label layoutX="454.0" layoutY="105.0" text="10€" GridPane.columnIndex="6" GridPane.rowIndex="0" />
+               <Label layoutX="291.0" layoutY="105.0" text="20€" GridPane.columnIndex="7" GridPane.rowIndex="0" />
+               <TextField editable="false" maxWidth="50.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="20.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="189.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="328.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="266.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="322.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="376.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+               <TextField editable="false" layoutX="429.0" layoutY="271.0" maxWidth="50.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+               <Label text="00,00€" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+            </children>
+         </GridPane>
+      </content>
+   </TitledPane>
+
 </fx:root>
-

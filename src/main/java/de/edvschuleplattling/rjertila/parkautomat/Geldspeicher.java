@@ -1,69 +1,95 @@
 package de.edvschuleplattling.rjertila.parkautomat;
 
-        import de.edvschuleplattling.rjertila.parkautomat.parkautomat.Geldmenge;
-        import javafx.fxml.FXMLLoader;
-        import javafx.scene.control.Label;
-        import javafx.scene.control.TextField;
-        import javafx.scene.layout.Pane;
+import de.edvschuleplattling.rjertila.parkautomat.parkautomat.Geldmenge;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
 
-        import java.io.IOException;
+import java.io.IOException;
+import java.net.URL;
+import java.text.NumberFormat;
+import java.util.*;
 
-public class Geldspeicher extends Pane {
-    @javafx.fxml.FXML
-    private TextField txt10C;
-    @javafx.fxml.FXML
-    private TextField txt20C;
-    @javafx.fxml.FXML
-    private TextField txt2E;
-    @javafx.fxml.FXML
-    private TextField txt1E;
-    @javafx.fxml.FXML
-    private TextField txt50C;
-    @javafx.fxml.FXML
-    private TextField txt5E;
-    @javafx.fxml.FXML
-    private TextField txt20E;
-    @javafx.fxml.FXML
-    private TextField txt10E;
-    @javafx.fxml.FXML
-    private Label lblBetrag;
-
-    private final TextField[] iterFields;
+public class Geldspeicher extends Pane implements Initializable {
+    @FXML
+    private GridPane grid;
+    private final static NumberFormat EUR = NumberFormat.getCurrencyInstance(new Locale("de","DE"));
 
     public Geldspeicher() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("geldspeicher.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
         try {
             fxmlLoader.load();
-            iterFields = new TextField[]{txt10C, txt20C, txt50C, txt1E, txt2E, txt5E, txt10E, txt20E};
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
     }
 
-    public void setGeldspeicher(Geldmenge g) {
-        var data = g.getSpeicher();
-        for (int i = 0; i < 8; i++) {
-            iterFields[i].setText(String.valueOf(data[i]));
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setGeldmenge(new Geldmenge());
+    }
+
+    /**
+     * Liest Die daten aus den Textfeldern und returned ein neues Object der Klasse Geldmenge.
+     * Aenderungen an diesem Object werden nicht in UI uebernommen
+     * fuer anderungen die methode setGeldmenge() benutzen
+     * @return new Geldmenge
+     */
+    public Geldmenge getGeldmengeUnmodifiable(){
+        List<Integer> ints = new ArrayList<>(grid.getChildren()
+                .stream()
+                .filter(o -> o instanceof TextField)
+                .mapToInt(t -> parseOderZerro(((TextField) t).getText()))
+                .boxed()
+                .toList());
+        //Collections.reverse(ints);
+        return new Geldmenge(ints.stream().mapToInt(Integer::intValue).toArray());
+    }
+
+    /**
+     * Setzy
+     * @param
+     */
+    public void setGeldmenge(Geldmenge gm){
+        for(Node n: grid.getChildren()){
+            if(n != null && GridPane.getRowIndex(n) != null && GridPane.getRowIndex(n) == 1){
+                if(n instanceof TextField){
+                    ((TextField) n).setText(Integer.toString(gm.getAnzahl(Arrays.stream(Geldmenge.GELDSTUECK_ARTEN).sorted().toList().get(GridPane.getColumnIndex(n)))));
+                }
+            }
+        }
+        getLabelGesammt().setText(EUR.format(gm.getBetrag() / 100f));
+    }
+
+    public String getTitle(){
+        return ((TitledPane)(this.getChildren().get(0))).getText();
+    }
+
+    public void setTitle(String text){
+        ((TitledPane)(this.getChildren().get(0))).setText(text);
+    }
+
+    private static int parseOderZerro(String s){
+        try{
+            return Integer.parseInt(s);
+        } catch (NumberFormatException e){
+            return 0;
         }
     }
 
-    public Geldmenge getGeldspeicher(){
-        return new Geldmenge(
-                Integer.parseInt(txt10C.getText()),
-                Integer.parseInt(txt20C.getText()),
-                Integer.parseInt(txt50C.getText()),
-                Integer.parseInt(txt1E.getText()),
-                Integer.parseInt(txt2E.getText()),
-                Integer.parseInt(txt5E.getText()),
-                Integer.parseInt(txt10E.getText()),
-                Integer.parseInt(txt20E.getText())
-        );
-    }
-
-    public void setLabel(String data) {
-        lblBetrag.setText(data);
+    private Label getLabelGesammt(){
+        for(Node n : grid.getChildren()){
+            if(GridPane.getRowIndex(n) == 0) continue;
+            if(n instanceof Label) return (Label)n;
+        }
+        throw new RuntimeException("Textfeld Gesammt Nicht gefunden");
     }
 }

@@ -1,6 +1,7 @@
 module de.edvschuleplattling.rjertila.parkautomat {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.google.gson;
 
 
     opens de.edvschuleplattling.rjertila.parkautomat to javafx.fxml;

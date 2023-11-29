@@ -1,89 +1,75 @@
 package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
+import de.edvschuleplattling.rjertila.parkautomat.parkautomat.Geldmenge;
+import de.edvschuleplattling.rjertila.parkautomat.exceptions.KeinPassendesRueckgeldException;
 public class Kasse {
-    public Geldmenge geld;
-    private final int[] mult = {10, 20, 50, 100, 200, 500, 1000, 2000};
 
-    public Kasse(Geldmenge startMenge) {
-        this.geld = startMenge;
+    private final Geldmenge INHALT;
+
+    public Kasse(Geldmenge inhalt) {
+        this.INHALT = inhalt;
     }
-    public Kasse() {
-        this.geld = new Geldmenge();
-    }
-
-    public Geldmenge bezahle(int betrag, Geldmenge zahlMenge) {
-        if (!zahlMenge.isGood(betrag)) throw new IllegalArgumentException("Not enough money provided");
-        int providedTotal = zahlMenge.getBetrag();
-        int changeAmount = providedTotal - betrag;
-
-        Geldmenge change;
-        try {
-            change = berechneGeld(changeAmount);
-            this.geld.minusGeld(zahlMenge);
-            this.geld.plusGeld(change);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new Geldmenge();
-        }
-
-        return change;
+    public Kasse(){
+        this(new Geldmenge());
     }
 
-    private Geldmenge berechneGeld(int betrag) {
-        Geldmenge res = new Geldmenge();
-        int changeNeeded = betrag;
+    /**
+     * Gesammtwert des Inhaltes
+     * @return Gesammtwert
+     */
+    public int getBetrag(){
+        return INHALT.getBetrag();
+    }
 
-        for (int i = mult.length - 1; i >= 0; i--) {
-            int coinValue = mult[i];
-            int coinsNeeded = changeNeeded / coinValue;
-            int coinsAvailable = geld.getSpeicher()[i];
+    /**
+     * Bezahlen am Kassenautomaten
+     * @param betrag zu zahlender betrag
+     * @param geld gezahlte geldmenge
+     * @return Geldmenge wechselgeld
+     * @throws KeinPassendesRueckgeldException wenn die kasse nicht ausreichend wechselgeld hat
+     * @throws IllegalArgumentException wenn zu wenig geld zum bezahlen gegeben wurde
+     */
+    public Geldmenge bezahle(int betrag, Geldmenge geld) throws KeinPassendesRueckgeldException, IllegalArgumentException {
+        if(geld.getBetrag() < betrag) throw new IllegalArgumentException("Gegebenes geld muss >= zu zahlender betrag sein");
 
-            if (coinsNeeded > 0 && coinsAvailable > 0) {
-                int coinsToGive = Math.min(coinsNeeded, coinsAvailable);
-                res.getSpeicher()[i] = coinsToGive;
-                changeNeeded -= coinsToGive * coinValue;
-            }
+        Geldmenge rueckgeld = new Geldmenge();
+        Geldmenge ausgang = new Geldmenge(getInhalt());
+        ausgang.hinzufuegen(geld);
 
-            if (changeNeeded == 0) {
-                break;
-            }
+        int restbetrag = geld.getBetrag() - betrag;
+
+        for(int i : Geldmenge.GELDSTUECK_ARTEN){
+            if(i > 200) continue;
+            if(ausgang.getAnzahl(i) == 0) continue;
+            if(i > restbetrag) continue;
+
+            int anzahl = Math.floorDiv(restbetrag,i);
+            if (anzahl > ausgang.getAnzahl(i)) anzahl = ausgang.getAnzahl(i);
+
+            rueckgeld.setAnzahl(i,anzahl);
+            restbetrag -= anzahl * i;
         }
 
-        if (changeNeeded > 0) {
-            throw new IllegalArgumentException("Nicht genügend Wechselgeld!");
-        }
+        if(restbetrag > 0) throw new KeinPassendesRueckgeldException(getInhalt(),geld,betrag);
 
-        return res;
+        getInhalt().hinzufuegen(geld);
+        getInhalt().abziehen(rueckgeld);
+
+        return rueckgeld;
+    }
+
+    /**
+     * Gibt den gesammten inhalt zurueck
+     * @return Geldmenge inhalt
+     */
+    public Geldmenge getInhalt() {
+        return INHALT;
     }
 
     @Override
     public String toString() {
-        return geld.toString();
-    }
-
-    public void readStartGeldmengeFromCSV() {
-        String csvFile = "init.csv"; // Name der CSV-Datei im aktuellen Verzeichnis
-        String line;
-        String cvsSplitBy = ","; // Trennzeichen in der CSV-Datei
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            line = br.readLine(); // Lese die erste Zeile (Münzwerte)
-            String[] values = line.split(cvsSplitBy);
-
-            // Fülle die Startgeldmenge mit den Werten aus der CSV-Datei
-            for (int i = 0; i < values.length; i++) {
-                int coinValue = Integer.parseInt(values[i].trim());
-                geld.setAnzahl(i, coinValue);
-            }
-
-            System.out.println("Startgeldmenge erfolgreich aus der CSV-Datei geladen.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return "Kasse{" +
+                "inhalt=" + INHALT +
+                '}';
     }
 }
