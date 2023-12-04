@@ -6,7 +6,6 @@ import de.edvschuleplattling.rjertila.parkautomat.parkautomat.Kasse;
 import java.util.Objects;
 
 public class Transaktion {
-
     private Kasse kasse;
     private Geldmenge gezahlt;
     private Geldmenge rueckgeld;
@@ -37,12 +36,6 @@ public class Transaktion {
 
     @Override
     public String toString() {
-        return "Transaktion{" +
-                "kasse=" + kasse +
-                ", gezahlt=" + gezahlt +
-                ", rueckgeld=" + rueckgeld +
-                ", Betrag=" + Betrag +
-                ", transaktionsStatus=" + transaktionsStatus +
-                '}';
+        return Integer.toString(Betrag) + gezahlt.getBetrag()+ rueckgeld.getBetrag() + transaktionsStatus;
     }
 }

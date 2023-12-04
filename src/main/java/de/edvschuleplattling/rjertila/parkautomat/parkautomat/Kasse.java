@@ -1,13 +1,12 @@
 package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
-import de.edvschuleplattling.rjertila.parkautomat.parkautomat.Geldmenge;
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.KeinPassendesRueckgeldException;
 public class Kasse {
 
-    private final Geldmenge INHALT;
+    private final Geldmenge speicher;
 
     public Kasse(Geldmenge inhalt) {
-        this.INHALT = inhalt;
+        this.speicher = inhalt;
     }
     public Kasse(){
         this(new Geldmenge());
@@ -18,7 +17,7 @@ public class Kasse {
      * @return Gesammtwert
      */
     public int getBetrag(){
-        return INHALT.getBetrag();
+        return speicher.getBetrag();
     }
 
     /**
@@ -63,13 +62,13 @@ public class Kasse {
      * @return Geldmenge inhalt
      */
     public Geldmenge getInhalt() {
-        return INHALT;
+        return speicher;
     }
 
     @Override
     public String toString() {
         return "Kasse{" +
-                "inhalt=" + INHALT +
+                "inhalt=" + speicher +
                 '}';
     }
 }
