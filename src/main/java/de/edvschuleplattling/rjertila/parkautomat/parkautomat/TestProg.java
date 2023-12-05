@@ -23,7 +23,7 @@ public class TestProg {
 // ==> Die Methode bezahle wirft eine Exception.
 // Der Inhalt des Münzspeichers, bleibt bei dieser fehlgeschlagenen Zahlung
 // unverändert.
-        Geldmenge zahlung2 = new Geldmenge(0, 0, 0, 0, 2,0,0,0);  // Konstruktor nur für Münzen
+        Geldmenge zahlung2 = new Geldmenge(0, 0, 0, 0, 2);  // Konstruktor nur für Münzen
         Geldmenge rueck2 = kasse.bezahle(260, zahlung2); // ==> Exception
 
 // Im Geldspeicher der Kasse sind nun (1,0,8,0,6,1,0,0)
