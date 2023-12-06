@@ -1,86 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.edvschuleplattling.rjertila.parkautomat.Geldspeicher?>
-<?import javafx.geometry.Insets?>
+<?import de.edvschuleplattling.rjertila.parkautomat.viewclasses.BetragLabel?>
+<?import de.edvschuleplattling.rjertila.parkautomat.viewclasses.Geldspeicher?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import de.edvschuleplattling.rjertila.parkautomat.Geldspeicher?>
 
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edvschuleplattling.rjertila.parkautomat.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="551.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.edvschuleplattling.rjertila.parkautomat.HelloController">
     <children>
-        <Label text="Parkautomat">
+        <Label layoutX="38.0" layoutY="14.0" text="Parkautomat">
             <font>
-                <Font size="37.0" />
+                <Font size="81.0" />
             </font>
         </Label>
-        <Geldspeicher fx:id="gmPaneBestand" title="Bestand" />
-        <HBox alignment="CENTER_LEFT" spacing="20.0">
-            <children>
-                <Label text="Betrag:">
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-                </Label>
-                <Label fx:id="lblBetrag" prefWidth="70.0">
-                    <font>
-                        <Font size="20.0" />
-                    </font>
-                </Label>
-                <Button fx:id="btnRandom" mnemonicParsing="false" onAction="#onClickRandom" text="Zufälliger Betrag" />
-            </children>
-        </HBox>
-        <HBox fx:id="boxButtons" layoutX="30.0" layoutY="217.0" prefWidth="200.0" spacing="6.0">
-            <children>
-                <Button mnemonicParsing="false" prefWidth="50.0" text="10c">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="20c">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="54.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="50c">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="98.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="1€">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="142.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="2€">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="186.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="5€">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="230.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="10€">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-                <Button layoutX="274.0" layoutY="10.0" mnemonicParsing="false" prefWidth="50.0" text="20€">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-            </children>
-        </HBox>
-        <Geldspeicher fx:id="gmPaneGezahlt" title="Gezahlt" />
-        <Geldspeicher fx:id="gmPaneRueckgeld" title="Rückgeld" />
+        <Label layoutX="12.0" layoutY="239.0" text="Betrag: ">
+            <font>
+                <Font size="26.0" />
+            </font>
+        </Label>
+        <BetragLabel fx:id="txtValue" layoutX="114.0" layoutY="237.0" textValue="0.00">
+            <font>
+                <Font size="29.0" />
+            </font>
+        </BetragLabel>
+        <Button fx:id="btnBetrag" layoutX="230.0" layoutY="246.0" mnemonicParsing="false" onAction="#onBetrag" text="Zufällger Betrag" />
+        <Geldspeicher fx:id="gmBestand" layoutX="12.0" layoutY="133.0" paneName="Bestand" />
+        <Geldspeicher fx:id="gmGezahlt" layoutX="12.0" layoutY="337.0" paneName="Gezahlt" />
+        <Geldspeicher fx:id="gmRueckgeld" layoutX="12.0" layoutY="447.0" paneName="Rückgeld" />
+        <Button fx:id="btn10c" layoutX="12.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle10c" text="10c">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn20c" layoutX="63.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle20c" text="20c">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn50c" layoutX="114.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle50c" text="50c">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn1Euro" layoutX="165.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle1Euro" text="1€">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn2Euro" layoutX="208.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle2Euro" text="2€">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn5Euro" layoutX="251.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle5Euro" text="5€">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn10Euro" layoutX="294.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle10Euro" text="10€">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn20Euro" layoutX="347.0" layoutY="286.0" mnemonicParsing="false" onAction="#handle20Euro" text="20€">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
     </children>
-</VBox>
+</AnchorPane>

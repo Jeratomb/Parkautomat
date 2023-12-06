@@ -1,74 +1,116 @@
 package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
-import de.edvschuleplattling.rjertila.parkautomat.exceptions.KeinPassendesRueckgeldException;
+import de.edvschuleplattling.rjertila.parkautomat.exceptions.WechselGeldException;
+
+/**
+ * Diese Klasse repräsentiert die Kasse des Parkautomaten.
+ * @author rjertila
+ */
 public class Kasse {
+    private Geldmenge geldmenge;
+    private final int[] multiplikatoren = {10, 20, 50, 100, 200, 500, 1000, 2000};
 
-    private final Geldmenge speicher;
-
-    public Kasse(Geldmenge inhalt) {
-        this.speicher = inhalt;
-    }
-    public Kasse(){
-        this(new Geldmenge());
+    /**
+     * Konstruktor für Kasse mit einer bestimmten Anfangsmenge an Geld.
+     * @param startMenge Die Anfangsmenge an Geld.
+     */
+    public Kasse(Geldmenge startMenge) {
+        this.geldmenge = startMenge;
     }
 
     /**
-     * Gesammtwert des Inhaltes
-     * @return Gesammtwert
+     * Standardkonstruktor für Kasse.
      */
-    public int getBetrag(){
-        return speicher.getBetrag();
+    public Kasse() {
+        this.geldmenge = new Geldmenge();
     }
 
     /**
-     * Bezahlen am Kassenautomaten
-     * @param betrag zu zahlender betrag
-     * @param geld gezahlte geldmenge
-     * @return Geldmenge wechselgeld
-     * @throws KeinPassendesRueckgeldException wenn die kasse nicht ausreichend wechselgeld hat
-     * @throws IllegalArgumentException wenn zu wenig geld zum bezahlen gegeben wurde
+     * Getter für die Geldmenge.
+     * @return Die Geldmenge in der Kasse.
      */
-    public Geldmenge bezahle(int betrag, Geldmenge geld) throws KeinPassendesRueckgeldException, IllegalArgumentException {
-        if(geld.getBetrag() < betrag) throw new IllegalArgumentException("Gegebenes geld muss >= zu zahlender betrag sein");
+    public Geldmenge getGeldmenge() {
+        return geldmenge;
+    }
 
-        Geldmenge rueckgeld = new Geldmenge();
-        Geldmenge ausgang = new Geldmenge(getInhalt());
-        ausgang.hinzufuegen(geld);
+    /**
+     * Setter für die Geldmenge.
+     * @param geldmenge Die neue Geldmenge in der Kasse.
+     */
+    public void setGeldmenge(Geldmenge geldmenge) {
+        this.geldmenge = geldmenge;
+    }
 
-        int restbetrag = geld.getBetrag() - betrag;
+    /**
+     * Führt eine Bezahlung durch und gibt das Wechselgeld zurück.
+     * @param betrag Der zu zahlende Betrag.
+     * @param zahlMenge Die gezahlte Geldmenge.
+     * @return Die Geldmenge des Wechselgelds.
+     * @throws WechselGeldException Wenn nicht genügend Wechselgeld vorhanden ist.
+     */
+    public Geldmenge bezahle(int betrag, Geldmenge zahlMenge) throws WechselGeldException {
+        int gesamtBetrag = zahlMenge.getGesamt();
+        int wechselgeldBetrag = gesamtBetrag - betrag;
 
-        for(int i : Geldmenge.GELDSTUECK_ARTEN){
-            if(i > 200) continue;
-            if(ausgang.getAnzahl(i) == 0) continue;
-            if(i > restbetrag) continue;
-
-            int anzahl = Math.floorDiv(restbetrag,i);
-            if (anzahl > ausgang.getAnzahl(i)) anzahl = ausgang.getAnzahl(i);
-
-            rueckgeld.setAnzahl(i,anzahl);
-            restbetrag -= anzahl * i;
+        if (wechselgeldBetrag < 0) {
+            throw new WechselGeldException();
         }
 
-        if(restbetrag > 0) throw new KeinPassendesRueckgeldException(getInhalt(),geld,betrag);
+        Geldmenge wechselgeld;
+        try {
+            wechselgeld = berechneGeld(wechselgeldBetrag);
+        } catch (WechselGeldException e) {
+            throw e;
+        }
 
-        getInhalt().hinzufuegen(geld);
-        getInhalt().abziehen(rueckgeld);
+        this.geldmenge.subtrahiereGeld(wechselgeld);
+        this.geldmenge.addiereGeld(zahlMenge);
 
-        return rueckgeld;
+        return wechselgeld;
+    }
+
+
+    /**
+     * Berechnet eine Geldmenge basierend auf einem Betrag.
+     * @param betrag Der Betrag.
+     * @return Die berechnete Geldmenge.
+     * @throws WechselGeldException Wenn nicht genügend Wechselgeld vorhanden ist.
+     */
+    private Geldmenge berechneGeld(int betrag) throws WechselGeldException {
+        Geldmenge ergebnis = new Geldmenge();
+        int wechselgeldBenoetigt = betrag;
+
+        if (wechselgeldBenoetigt == 0) return ergebnis;
+
+        for (int i = multiplikatoren.length - 1; i >= 0; i--) {
+            int münzwert = multiplikatoren[i];
+            int münzenBenötigt = wechselgeldBenoetigt / münzwert;
+            int verfügbareMünzen = geldmenge.getMuenzen()[i];
+
+            if (münzenBenötigt > 0 && verfügbareMünzen > 0) {
+                int münzenZuGeben = Math.min(münzenBenötigt, verfügbareMünzen);
+                ergebnis.getMuenzen()[i] = münzenZuGeben;
+                wechselgeldBenoetigt -= münzenZuGeben * münzwert;
+            }
+
+            if (wechselgeldBenoetigt == 0) {
+                break;
+            }
+        }
+
+        if (wechselgeldBenoetigt > 0) {
+            throw new WechselGeldException();
+        }
+
+        return ergebnis;
     }
 
     /**
-     * Gibt den gesammten inhalt zurueck
-     * @return Geldmenge inhalt
+     * Gibt eine String-Repräsentation der Kasse zurück.
+     * @return Eine String-Repräsentation der Kasse.
      */
-    public Geldmenge getInhalt() {
-        return speicher;
-    }
-
     @Override
     public String toString() {
-        return "Kasse{" +
-                "inhalt=" + speicher +
-                '}';
+        return geldmenge.toString();
     }
 }
