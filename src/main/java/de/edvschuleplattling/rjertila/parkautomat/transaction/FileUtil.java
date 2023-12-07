@@ -3,30 +3,34 @@ package de.edvschuleplattling.rjertila.parkautomat.transaction;
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.DataExportException;
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.DataImportException;
 
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class is used for writing and reading to and from a given path
+ * Diese Klasse wird verwendet, um Transaktionen zu speichern und zu lesen.
+ * Sie bietet Methoden zum Speichern einer Transaktion, zum Abrufen aller Transaktionen,
+ * zum Überprüfen, ob eine Datei existiert, und zum Löschen aller Daten.
+ * Die Daten werden in einer CSV-Datei im Pfad "data/protocol.csv" gespeichert.
  * @author rjertila
  */
 public class FileUtil {
     private static final String PATH = "data/protocol.csv";
+
+    /**
+     * Speichert eine Transaktion in der Datei.
+     * @param transaction Die zu speichernde Transaktion.
+     * @throws DataExportException Wenn beim Speichern der Transaktion ein Fehler auftritt.
+     */
     public static void saveTransaction(Transaktion transaction) throws DataExportException {
         try {
             File file = new File(PATH);
 
             file.getParentFile().mkdirs();
             file.createNewFile();
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true))) {
                 bw.write(transaction.toCSV());
             } catch (IOException e) {
                 e.printStackTrace();
@@ -37,6 +41,11 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Liest alle Transaktionen aus der Datei.
+     * @return Eine Liste aller Transaktionen.
+     * @throws DataImportException Wenn beim Lesen der Transaktionen ein Fehler auftritt.
+     */
     public static List<Transaktion> getTransactions() throws DataImportException {
         int zeilenNr = 0;
         List<Transaktion> transactions = new ArrayList<>();
@@ -62,10 +71,18 @@ public class FileUtil {
         return transactions;
     }
 
+    /**
+     * Überprüft, ob die Datei existiert.
+     * @return true, wenn die Datei existiert, sonst false.
+     */
     public static boolean exists() {
         return new File(PATH).exists();
     }
 
+    /**
+     * Löscht alle Daten aus der Datei.
+     * @throws DataExportException Wenn beim Löschen der Daten ein Fehler auftritt.
+     */
     public static void clearData() throws DataExportException {
         try {
             new FileWriter(PATH, false).close();
@@ -74,4 +91,3 @@ public class FileUtil {
         }
     }
 }
-

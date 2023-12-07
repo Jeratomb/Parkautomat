@@ -3,6 +3,7 @@ package de.edvschuleplattling.rjertila.parkautomat;
 
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.DataExportException;
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.DataImportException;
+import de.edvschuleplattling.rjertila.parkautomat.exceptions.SprachFilter;
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.WechselGeldException;
 import de.edvschuleplattling.rjertila.parkautomat.fehlerlog.FehlerLogger;
 import de.edvschuleplattling.rjertila.parkautomat.parkautomat.Geldmenge;
@@ -18,18 +19,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Random;
 import java.util.ResourceBundle;
 
 /**
  * Diese Klasse wird verwendet, um die GUI zu steuern und Benutzereingaben zu verarbeiten.
  * Sie behandelt auch die Geschäftslogik der Anwendung.
+ *
  * @author rjertila
  */
 public class HelloController implements Initializable {
@@ -60,6 +64,8 @@ public class HelloController implements Initializable {
     private Button btn10Euro;
     @FXML
     private Button btn20Euro;
+    @FXML
+    private ChoiceBox<String> languageChoiceBox;
 
     private Button[] btns;
 
@@ -73,6 +79,7 @@ public class HelloController implements Initializable {
 
     /**
      * Setzt den Uebersicht-Controller.
+     *
      * @param uebersichtListController Der Uebersicht-Controller.
      */
     public void setUebersichtListController(Uebersicht uebersichtListController) {
@@ -82,7 +89,8 @@ public class HelloController implements Initializable {
 
     /**
      * Initialisiert die GUI und lädt die Anfangsdaten.
-     * @param url Der Pfad zur FXML-Datei.
+     *
+     * @param url            Der Pfad zur FXML-Datei.
      * @param resourceBundle Die Ressourcen für die Lokalisierung.
      */
     @Override
@@ -96,15 +104,34 @@ public class HelloController implements Initializable {
             gmBestand.updateValues(kasse.getGeldmenge());
         } catch (DataImportException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setTitle("Data Import Error");
-            a.setContentText(e.getMessage());
+            a.setTitle(SprachFilter.getMessage("errorTitle"));
+            a.setContentText(SprachFilter.getMessage("dataImportException"));
             a.show();
         }
         temp = new Geldmenge();
+        // Initialisieren der ChoiceBox mit den unterstützten Sprachen
+        languageChoiceBox.getItems().addAll("Deutsch", "English", "Français", "العربية");
+        languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue) {
+                case "Deutsch":
+                    SprachFilter.setLocale(Locale.GERMAN);
+                    break;
+                case "English":
+                    SprachFilter.setLocale(Locale.ENGLISH);
+                    break;
+                case "Français":
+                    SprachFilter.setLocale(Locale.FRENCH);
+                    break;
+                case "العربية":
+                    SprachFilter.setLocale(new Locale("ar"));
+                    break;
+            }
+        });
     }
 
     /**
      * Liest die Anfangsdaten aus einer Datei ein.
+     *
      * @return Die eingelesene Geldmenge.
      * @throws DataImportException Wenn ein Fehler beim Einlesen der Datei auftritt.
      */
@@ -130,6 +157,7 @@ public class HelloController implements Initializable {
     /**
      * Wird aufgerufen, wenn der Benutzer auf den "Betrag" Button klickt.
      * Generiert einen zufälligen Betrag und aktualisiert die GUI.
+     *
      * @param actionEvent Das ausgelöste Ereignis.
      */
     @FXML
@@ -188,6 +216,7 @@ public class HelloController implements Initializable {
 
     /**
      * Aktualisiert die gezahlte Geldmenge und die GUI.
+     *
      * @param amount Die hinzuzufügende Geldmenge.
      */
     private void updateMoney(Geldmenge amount) {
@@ -225,6 +254,7 @@ public class HelloController implements Initializable {
     /**
      * Wird aufgerufen, wenn der Benutzer auf den "Fertig" Button klickt.
      * Führt die Bezahlung durch und aktualisiert die GUI.
+     *
      * @param actionEvent Das ausgelöste Ereignis.
      */
     @FXML
@@ -240,8 +270,8 @@ public class HelloController implements Initializable {
         } catch (WechselGeldException e) {
             logger.log(e);
             Alert a = new Alert(Alert.AlertType.ERROR);
-            a.setTitle(e.getTitle());
-            a.setContentText(e.getMessage());
+            a.setTitle(SprachFilter.getMessage("errorTitle"));
+            a.setContentText(SprachFilter.getMessage("wechselGeldException"));
             a.show();
             curStatus = Status.CANCELED;
         } finally {
@@ -250,7 +280,8 @@ public class HelloController implements Initializable {
                 FileUtil.saveTransaction(transaction);
             } catch (DataExportException e) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setContentText(e.getMessage());
+                a.setTitle(SprachFilter.getMessage("errorTitle"));
+                a.setContentText(SprachFilter.getMessage("dataExportException"));
                 a.show();
             }
         }

@@ -1,15 +1,19 @@
 package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 
 /**
- * Diese Klasse stellt eine benutzerdefinierte Ausnahme dar, wenn nicht genügend Wechselgeld vorhanden ist.
- * Sie erweitert GeldException.
- * @author rjertila
+ * Eine benutzerdefinierte Ausnahme, die ausgelöst wird, wenn nicht genügend Wechselgeld vorhanden ist.
+ * Erweitert GeldException.
  */
 public class WechselGeldException extends GeldException {
     /**
-     * Konstruktor für WechselGeldException.
+     * Erstellt eine neue WechselgeldException.
+     * @param title Der Titel der Ausnahme.
      */
+    public WechselGeldException(String title) {
+        super(title, SprachFilter.getMessage("wechselGeldException"));
+    }
+
     public WechselGeldException() {
-        super("Nicht genügend Wechselgeld", "In der Kasse ist aktuell zu wenig Wechselgeld!");
+        super(SprachFilter.getMessage("wechselGeldException"));
     }
 }

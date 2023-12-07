@@ -1,23 +1,22 @@
 package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 
 /**
- * Diese Klasse stellt eine benutzerdefinierte Ausnahme dar, wenn kein passendes Rückgeld vorhanden ist.
- * Sie erweitert GeldException.
- * @author rjertila
+ * Eine benutzerdefinierte Ausnahme, die ausgelöst wird, wenn kein passendes Rückgeld vorhanden ist.
+ * Erweitert GeldException.
  */
 public class KeinPassendesRueckgeldException extends GeldException {
     /**
-     * Konstruktor für KeinPassendesRueckgeldException mit einem spezifischen Titel.
+     * Erstellt eine neue KeinPassendesRueckgeldException mit einem spezifischen Titel.
      * @param title Der Titel der Ausnahme.
      */
     public KeinPassendesRueckgeldException(String title) {
-        super(title, "Nicht genug Rückgeld vorhanden!");
+        super(title, SprachFilter.getMessage("KeinPassendesRueckgeldException"));
     }
 
     /**
-     * Standardkonstruktor für KeinPassendesRueckgeldException.
+     * Erstellt eine neue KeinPassendesRueckgeldException mit einem Standardtitel.
      */
     public KeinPassendesRueckgeldException() {
-        this("Fehler");
+        this(SprachFilter.getMessage("Fehler"));
     }
 }

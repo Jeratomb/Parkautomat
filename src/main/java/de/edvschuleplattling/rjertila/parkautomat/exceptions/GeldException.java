@@ -1,27 +1,27 @@
 package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 
-
 /**
- * Diese Klasse stellt eine benutzerdefinierte Ausnahme für Geldoperationen dar.
- * Sie erweitert Exception und fügt ein Attribut "title" hinzu.
- * @author rjertila
+ * Eine benutzerdefinierte Ausnahme für Geldoperationen.
+ * Erweitert Exception und fügt ein Attribut "title" hinzu.
  */
 public class GeldException extends Exception {
     private String title;
 
-
     /**
-     * Konstruktor für GeldException.
+     * Erstellt eine neue GeldException.
      * @param title Der Titel der Ausnahme.
      * @param message Die Detailnachricht der Ausnahme.
      */
     public GeldException(String title, String message) {
-        super("Fehler: " + message);
+        super(SprachFilter.getMessage(message));
         this.title = title;
+    }
+    public GeldException(String message) {
+        super(SprachFilter.getMessage(message));
     }
 
     /**
-     * Getter für den Titel.
+     * Gibt den Titel der Ausnahme zurück.
      * @return Der Titel der Ausnahme.
      */
     public String getTitle() {
@@ -29,11 +29,10 @@ public class GeldException extends Exception {
     }
 
     /**
-     * Setter für den Titel.
+     * Setzt den Titel der Ausnahme.
      * @param title Der neue Titel der Ausnahme.
      */
     public void setTitle(String title) {
         this.title = title;
     }
-
 }

@@ -113,14 +113,6 @@ public class Geldmenge {
         return summe;
     }
 
-    /**
-     * Überprüft, ob die Geldmenge gültig ist.
-     */
-    public boolean istGueltig() {
-        if (this.getGesamt() % 10 != 0) return false;
-        if (this.getGesamt() < 0) return false;
-        return true;
-    }
 
     /**
      * Überprüft, ob die Geldmenge für einen bestimmten Betrag gültig ist.
