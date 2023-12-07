@@ -1,9 +1,10 @@
 package de.edvschuleplattling.rjertila.parkautomat.parkautomat;
 
 import de.edvschuleplattling.rjertila.parkautomat.exceptions.KeinPassendesRueckgeldException;
+import de.edvschuleplattling.rjertila.parkautomat.exceptions.WechselGeldException;
 
 public class TestProg {
-    public static void main(String[] args) throws KeinPassendesRueckgeldException {
+    public static void main(String[] args) throws KeinPassendesRueckgeldException, WechselGeldException {
         // 5x10c 0x20c, 8x50c, 0x1€, 7x2€, keine Scheine
         Geldmenge startMenge = new Geldmenge(5, 0, 8, 0, 7, 0, 0, 0);
         //Erzeugt eine Kasse mit dem obigen Startkapital
