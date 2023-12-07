@@ -3,6 +3,7 @@ package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 /**
  * Eine benutzerdefinierte Ausnahme, die ausgelöst wird, wenn nicht genügend Wechselgeld vorhanden ist.
  * Erweitert GeldException.
+ * @author rjertila
  */
 public class WechselGeldException extends GeldException {
     /**

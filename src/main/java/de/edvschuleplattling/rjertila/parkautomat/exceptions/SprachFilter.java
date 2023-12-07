@@ -25,7 +25,7 @@ public class SprachFilter {
      * @return Die Nachricht in der aktuell ausgewählten Sprache.
      */
     public static String getMessage(String key) {
-        ResourceBundle bundle = ResourceBundle.getBundle("nachrichten", currentLocale);
+        ResourceBundle bundle = ResourceBundle.getBundle("messages", currentLocale);
         return bundle.getString(key);
     }
 }

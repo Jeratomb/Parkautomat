@@ -3,6 +3,7 @@ package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 /**
  * Eine benutzerdefinierte Ausnahme, die ausgelöst wird, wenn kein passendes Rückgeld vorhanden ist.
  * Erweitert GeldException.
+ * @author rjertila
  */
 public class KeinPassendesRueckgeldException extends GeldException {
     /**

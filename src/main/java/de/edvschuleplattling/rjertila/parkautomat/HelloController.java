@@ -97,6 +97,7 @@ public class HelloController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         txtValue.setTextValue("00.00 €");
 
+
         btns = new Button[]{btn10c, btn20c, btn50c, btn1Euro, btn2Euro, btn5Euro, btn10Euro, btn20Euro};
 
         try {
@@ -127,6 +128,7 @@ public class HelloController implements Initializable {
                     break;
             }
         });
+        languageChoiceBox.getSelectionModel().selectFirst();
     }
 
     /**

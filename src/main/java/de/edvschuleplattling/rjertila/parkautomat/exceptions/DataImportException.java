@@ -3,6 +3,7 @@ package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 /**
  * Eine benutzerdefinierte Ausnahme, die ausgelöst wird, wenn ein Fehler beim Importieren von Daten auftritt.
  * Erweitert Exception und fügt die Attribute "file" und "zeilenNr" hinzu.
+ * @author rjertila
  */
 public class DataImportException extends Exception {
     private final String file;

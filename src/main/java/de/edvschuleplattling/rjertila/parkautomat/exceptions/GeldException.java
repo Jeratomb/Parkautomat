@@ -3,6 +3,7 @@ package de.edvschuleplattling.rjertila.parkautomat.exceptions;
 /**
  * Eine benutzerdefinierte Ausnahme für Geldoperationen.
  * Erweitert Exception und fügt ein Attribut "title" hinzu.
+ * @author rjertila
  */
 public class GeldException extends Exception {
     private String title;
